@@ -1,0 +1,14 @@
+﻿<Action Name="Check if string contains substring" ClassName="Delegate.Office365.Common.WorkflowActions.ContainsString" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Check if %1 contains substring %2 and output result to %3 (Is case sensitive? %4)">
+    <FieldBind Id="1" Field="sourceString"    Text="Source String" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="subString" Text="substring" DesignerType="TextArea" />
+    <FieldBind Id="3" Field="isContaining" Text="result" DesignerType="ParameterNames" />
+    <FieldBind Id="4" Field="isCaseSensitive" Text="is case sensitive" DesignerType="Bool" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="sourceString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="Source String" />
+    <Parameter Direction="In" Name="subString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="substring" />
+    <Parameter Direction="Out" Name="isContaining" DesignerType="ParameterNames" Type="System.Boolean, mscorlib" Description="result"/>
+    <Parameter Direction="In" Name="isCaseSensitive" InitialValue="True" DesignerType="Bool" Type="System.Boolean, mscorlib" Description="Is case sensitive" />
+  </Parameters>
+</Action>

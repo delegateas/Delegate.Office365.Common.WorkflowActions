@@ -1,0 +1,12 @@
+﻿<Action Name="Format DateTime object to string" ClassName="Delegate.Office365.Common.WorkflowActions.FormatDateTime" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Format DateTime object %1 with formatting string %2 (Output to %3)">
+    <FieldBind Id="1" Field="InDateTime"    Text="dateTime" DesignerType="ParameterNames" />
+    <FieldBind Id="2" Field="InFormatString" Text="yyyyMMddHHmm" DesignerType="TextArea" />
+    <FieldBind Id="3" Field="OutFormattedDate"    Text="formattedDate" DesignerType="ParameterNames" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="InDateTime" DesignerType="ParameterNames" Type="System.DateTime, mscorlib" />
+    <Parameter Direction="In" Name="InFormatString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="format string" />    
+    <Parameter Direction="Out" Name="OutFormattedDate" DesignerType="ParameterNames" Type="System.String, mscorlib" />
+  </Parameters>
+</Action>

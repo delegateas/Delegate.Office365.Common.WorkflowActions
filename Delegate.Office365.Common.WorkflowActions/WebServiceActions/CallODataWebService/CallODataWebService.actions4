@@ -1,0 +1,21 @@
+﻿<Action Name="Call OData web service" ClassName="Delegate.Office365.Common.WorkflowActions.CallODataWebService" Category="Web Services" AppliesTo="all">
+  <RuleDesigner Sentence="HTTP %2 to %1 OData web service with %3 and %4 (Output response header: %5, response content: %6, status: %7)">
+    <!-- Define the UI widgets SharePoint designer should use for configuring this action -->
+    <FieldBind Id="1" Field="InUrl" Text="this" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="InMethod" Text="Method" DesignerType="TextArea" />
+    <FieldBind Id="3" Field="InRequestHeader" Text="Request Header" DesignerType="ParameterNames" />
+    <FieldBind Id="4" Field="InRequestContent" Text="Request Content" DesignerType="ParameterNames" />
+    <FieldBind Id="5" Field="OutResponseHeader" Text="Response Header" DesignerType="ParameterNames" />
+    <FieldBind Id="6" Field="OutResponseContent" Text="Response Content" DesignerType="ParameterNames" />
+    <FieldBind Id="7" Field="OutStatus" Text="Status" DesignerType="ParameterNames" />
+  </RuleDesigner>
+<Parameters>
+    <Parameter Direction="In" Name="InUrl" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Service URL"/>
+    <Parameter Direction="In" Name="InMethod" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="HTTP Method"/>
+    <Parameter Direction="In" Name="InRequestHeader" DesignerType="ParameterNames" Type="Microsoft.Activities.DynamicValue, Microsoft.Activities" Description="Request Header"/>
+    <Parameter Direction="In" Name="InRequestContent" DesignerType="ParameterNames" Type="Microsoft.Activities.DynamicValue, Microsoft.Activities" Description="Request Content"/>
+    <Parameter Direction="Out" Name="OutResponseHeader" DesignerType="ParameterNames" Type="Microsoft.Activities.DynamicValue, Microsoft.Activities" Description="Response Header"/>
+    <Parameter Direction="Out" Name="OutResponseContent" DesignerType="ParameterNames" Type="Microsoft.Activities.DynamicValue, Microsoft.Activities" Description="Response Content"/>
+    <Parameter Direction="Out" Name="OutStatus" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="HTTP Status Code"/>
+</Parameters>
+</Action>

@@ -1,0 +1,374 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Delegate.Office365.Common.WorkflowActions.Start2013ListWorkflow"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:msdad="clr-namespace:Microsoft.SharePoint.DesignTime.Activities.Design;assembly=Microsoft.SharePoint.DesignTime.Activities.Design"
+ xmlns:p="http://schemas.microsoft.com/workflow/2012/07/xaml/activities"
+ xmlns:p1="wf://workflow.windows.net/$Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sn="clr-namespace:System.Net;assembly=System"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="InListName" Type="InArgument(x:String)" />
+    <x:Property Name="InWorkflowName" Type="InArgument(x:String)" />
+    <x:Property Name="InItemId" Type="InArgument(x:String)" />
+    <x:Property Name="OutStatusCode" Type="OutArgument(x:String)" />
+    <x:Property Name="OutResponseHeaders" Type="OutArgument(x:String)" />
+    <x:Property Name="OutResponseBody" Type="OutArgument(x:String)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>Delegate.Office365.Common.WorkflowActions.Start2013ListWorkflow_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>Microsoft.Activities</x:String>
+      <x:String>System.Net</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.Activities.Design</AssemblyReference>
+      <AssemblyReference>Microsoft.SharePoint.DesignTime.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Workflow.Runtime</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Delegate.Office365.Common.WorkflowActions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Start 2013 List Workflow" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="WebUrl" />
+      <Variable x:TypeArguments="x:String" Name="ListGuid" />
+      <Variable x:TypeArguments="x:String" Name="ItemId" />
+      <Variable x:TypeArguments="x:String" Name="WorkflowId" />
+      <Variable x:TypeArguments="sn:HttpStatusCode" Name="HttpStatusCode" />
+      <Variable x:TypeArguments="p:DynamicValue" Name="ResponseBody" />
+      <Variable x:TypeArguments="p:DynamicValue" Name="ResponseHeaders" />
+    </Sequence.Variables>
+    <p1:LookupWorkflowContextProperty sap2010:WorkflowViewState.IdRef="LookupWorkflowContextProperty_1" PropertyName="CurrentWebUrl">
+      <p1:LookupWorkflowContextProperty.Result>
+        <OutArgument x:TypeArguments="x:String">
+          <mca:CSharpReference x:TypeArguments="x:String">WebUrl</mca:CSharpReference>
+        </OutArgument>
+      </p1:LookupWorkflowContextProperty.Result>
+    </p1:LookupWorkflowContextProperty>
+    <If DisplayName="If no list name supplied" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <mca:CSharpValue x:TypeArguments="x:Boolean">InListName.Length == 0</mca:CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <Sequence DisplayName="Assume current" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <p1:LookupWorkflowContextProperty sap2010:WorkflowViewState.IdRef="LookupWorkflowContextProperty_2" PropertyName="ListId">
+            <p1:LookupWorkflowContextProperty.Result>
+              <OutArgument x:TypeArguments="x:String">
+                <mca:CSharpReference x:TypeArguments="x:String">ListGuid</mca:CSharpReference>
+              </OutArgument>
+            </p1:LookupWorkflowContextProperty.Result>
+          </p1:LookupWorkflowContextProperty>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Get List Id by Title" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="p:DynamicValue" Name="ListResponse" />
+            <Variable x:TypeArguments="x:String" Name="GetListGuidUrl" />
+          </Sequence.Variables>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">
+                <mca:CSharpReference x:TypeArguments="x:String">GetListGuidUrl</mca:CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">WebUrl + "/_api/web/lists/getbytitle('" + InListName + "')"</mca:CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+          <p:HttpSend DisplayName="HttpSend for List Guid" sap2010:WorkflowViewState.IdRef="HttpSend_1" Method="GET">
+            <p:HttpSend.RequestHeaders>
+              <InArgument x:TypeArguments="p:DynamicValue">
+                <p:SetDynamicValueProperties>
+                  <scg:Dictionary x:TypeArguments="x:String, InArgument">
+                    <InArgument x:TypeArguments="x:String" x:Key="Accept">application/json;odata=verbose</InArgument>
+                    <InArgument x:TypeArguments="x:String" x:Key="Content-Type">application/json;odata=verbose</InArgument>
+                  </scg:Dictionary>
+                </p:SetDynamicValueProperties>
+              </InArgument>
+            </p:HttpSend.RequestHeaders>
+            <p:HttpSend.ResponseContent>
+              <OutArgument x:TypeArguments="p:DynamicValue">
+                <mca:CSharpReference x:TypeArguments="p:DynamicValue">ListResponse</mca:CSharpReference>
+              </OutArgument>
+            </p:HttpSend.ResponseContent>
+            <p:HttpSend.Uri>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">GetListGuidUrl</mca:CSharpValue>
+              </InArgument>
+            </p:HttpSend.Uri>
+          </p:HttpSend>
+          <p:GetDynamicValueProperty x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="GetDynamicValueProperty`1_1" PropertyName="d/Id">
+            <p:GetDynamicValueProperty.Result>
+              <OutArgument x:TypeArguments="x:String">
+                <mca:CSharpReference x:TypeArguments="x:String">ListGuid</mca:CSharpReference>
+              </OutArgument>
+            </p:GetDynamicValueProperty.Result>
+            <p:GetDynamicValueProperty.Source>
+              <InArgument x:TypeArguments="p:DynamicValue">
+                <mca:CSharpValue x:TypeArguments="p:DynamicValue">ListResponse</mca:CSharpValue>
+              </InArgument>
+            </p:GetDynamicValueProperty.Source>
+          </p:GetDynamicValueProperty>
+        </Sequence>
+      </If.Else>
+    </If>
+    <If DisplayName="If no item id supplied" sap2010:WorkflowViewState.IdRef="If_3">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <mca:CSharpValue x:TypeArguments="x:Boolean">InItemId.Length == 0</mca:CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <Sequence DisplayName="Assume current" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:Int32" Name="id" />
+          </Sequence.Variables>
+          <p1:GetCurrentItemId sap2010:WorkflowViewState.IdRef="GetCurrentItemId_1">
+            <p1:GetCurrentItemId.Result>
+              <OutArgument x:TypeArguments="x:Int32">
+                <mca:CSharpReference x:TypeArguments="x:Int32">id</mca:CSharpReference>
+              </OutArgument>
+            </p1:GetCurrentItemId.Result>
+          </p1:GetCurrentItemId>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">
+                <mca:CSharpReference x:TypeArguments="x:String">ItemId</mca:CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">id.ToString()</mca:CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">
+              <mca:CSharpReference x:TypeArguments="x:String">ItemId</mca:CSharpReference>
+            </OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">InItemId</mca:CSharpValue>
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <Sequence DisplayName="Get Workflow Id" sap2010:WorkflowViewState.IdRef="Sequence_6">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="p:DynamicValue" Name="WorkflowResponse" />
+      </Sequence.Variables>
+      <p:HttpSend sap2010:WorkflowViewState.IdRef="HttpSend_2" Method="POST">
+        <p:HttpSend.RequestHeaders>
+          <InArgument x:TypeArguments="p:DynamicValue">
+            <p:SetDynamicValueProperties>
+              <scg:Dictionary x:TypeArguments="x:String, InArgument">
+                <InArgument x:TypeArguments="x:String" x:Key="Content-Type">application/json;odata=verbose</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="Accept">application/json;odata=verbose</InArgument>
+              </scg:Dictionary>
+            </p:SetDynamicValueProperties>
+          </InArgument>
+        </p:HttpSend.RequestHeaders>
+        <p:HttpSend.ResponseContent>
+          <OutArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpReference x:TypeArguments="p:DynamicValue">WorkflowResponse</mca:CSharpReference>
+          </OutArgument>
+        </p:HttpSend.ResponseContent>
+        <p:HttpSend.Uri>
+          <InArgument x:TypeArguments="x:String">
+            <mca:CSharpValue x:TypeArguments="x:String">WebUrl + "/_api/SP.WorkflowServices.WorkflowSubscriptionService.Current/EnumerateSubscriptionsByList(guid'" + ListGuid + "')?$filter=Name eq '" + InWorkflowName + "'"</mca:CSharpValue>
+          </InArgument>
+        </p:HttpSend.Uri>
+      </p:HttpSend>
+      <p:GetDynamicValueProperty x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="GetDynamicValueProperty`1_2" PropertyName="d/results(0)/Id">
+        <p:GetDynamicValueProperty.Result>
+          <OutArgument x:TypeArguments="x:String">
+            <mca:CSharpReference x:TypeArguments="x:String">WorkflowId</mca:CSharpReference>
+          </OutArgument>
+        </p:GetDynamicValueProperty.Result>
+        <p:GetDynamicValueProperty.Source>
+          <InArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpValue x:TypeArguments="p:DynamicValue">WorkflowResponse</mca:CSharpValue>
+          </InArgument>
+        </p:GetDynamicValueProperty.Source>
+      </p:GetDynamicValueProperty>
+    </Sequence>
+    <p:HttpSend DisplayName="Start Workflow" sap2010:WorkflowViewState.IdRef="HttpSend_3" Method="POST">
+      <p:HttpSend.RequestHeaders>
+        <InArgument x:TypeArguments="p:DynamicValue">
+          <p:SetDynamicValueProperties>
+            <scg:Dictionary x:TypeArguments="x:String, InArgument">
+              <InArgument x:TypeArguments="x:String" x:Key="Accept">application/json;odata=verbose</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="Content-Type">application/json;odata=verbose</InArgument>
+            </scg:Dictionary>
+          </p:SetDynamicValueProperties>
+        </InArgument>
+      </p:HttpSend.RequestHeaders>
+      <p:HttpSend.ResponseContent>
+        <OutArgument x:TypeArguments="p:DynamicValue">
+          <mca:CSharpReference x:TypeArguments="p:DynamicValue">ResponseHeaders</mca:CSharpReference>
+        </OutArgument>
+      </p:HttpSend.ResponseContent>
+      <p:HttpSend.ResponseHeaders>
+        <OutArgument x:TypeArguments="p:DynamicValue">
+          <mca:CSharpReference x:TypeArguments="p:DynamicValue">ResponseBody</mca:CSharpReference>
+        </OutArgument>
+      </p:HttpSend.ResponseHeaders>
+      <p:HttpSend.ResponseStatusCode>
+        <OutArgument x:TypeArguments="sn:HttpStatusCode">
+          <mca:CSharpReference x:TypeArguments="sn:HttpStatusCode">HttpStatusCode</mca:CSharpReference>
+        </OutArgument>
+      </p:HttpSend.ResponseStatusCode>
+      <p:HttpSend.Uri>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">WebUrl + "/_api/SP.WorkflowServices.WorkflowInstanceService.Current/StartWorkflowOnListItemBySubscriptionId(subscriptionId='" + WorkflowId + "',itemId='" + ItemId + "')"</mca:CSharpValue>
+        </InArgument>
+      </p:HttpSend.Uri>
+    </p:HttpSend>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">
+          <mca:CSharpReference x:TypeArguments="x:String">OutStatusCode</mca:CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">HttpStatusCode.ToString()</mca:CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">
+          <mca:CSharpReference x:TypeArguments="x:String">OutResponseBody</mca:CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">ResponseBody.ToString()</mca:CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">
+          <mca:CSharpReference x:TypeArguments="x:String">OutResponseHeaders</mca:CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">ResponseHeaders.ToString()</mca:CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>d5IBRDpcRGVsZWdhdGUgQXp1cmUgRnJhbWV3b3JrXE1haW5cU291cmNlXERlbGVnYXRlLk9mZmljZTM2NS5Db21tb24uV29ya2Zsb3dBY3Rpb25zXFdvcmtmbG93QWN0aW9uc1xTdGFydDIwMTNMaXN0V29ya2Zsb3dcU3RhcnQyMDEzTGlzdFdvcmtmbG93LnhhbWxCOQOtAg4CAQFDBUkoAwG/A0oFkQEKAwG2ApIBBcABCgMB2gHBAQXnARADAZYB6AEFhwISAgFZiAIFkwIOAgE8lAIFnwIOAgEfoAIFqwIOAgECRgtGVwMBwQNDdkOFAQMBwANNC01gAwG3AlEJWRQDAa4DXAmPARQDAcUClQELlQFeAwHbAZkBCbABFAMBhgKzAQm+ARIDAekBxQEH2gEUAwG3AdsBB+YBIwMBlwHrAQvwASkDAZMB/wEL/wFoAwGFAYQCC4QC8gECAXf1AQv1AWYCAWn6AQv6AWMCAVvoAWLoAWgCAVqQAguQAmICAUuLAguLAl4CAT2cAgucAmACAS6XAguXAmACASCoAguoAmMCARGjAgujAmMCAQNSC1guAwGvA2ELbBQDAY0DbQuCARgDAegCgwELjgEnAwHGAp0BC6MBIQMBpgKkAQuvARQDAYcCuwEPuwFVAwH4AbYBD7YBWwMB6gHIAQ3NASsDAdcB1wEN1wHxAQMByAHSAQ3SAWkDAbkBxQFHxQFNAwG4Ad4BDd4BXQMBqAHjAQ3jAWEDAZkB2wGIAdsBmQEDAZgB7QFF7QFjAwGVAe4BS+4BaQMBlAFVEVVfAwGxA1J8UoQBAwGwA2kRaYoBAwGeA2QRZGUDAY4DcBF1LwMBigN/EX9dAwH6AnoRemkDAeoCbXBtdQMB6QKGARGGAV8DAdgCiwERiwFhAwHIAoMBjAGDAZIBAwHHAqABEaABWAMBpwKsARGsAVwDAZcCpwERpwFdAwGIAssBR8sBZQMB2QHKAU3KAWsDAdgBcktyaQMBjANzUXNvAwGLAw==</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LookupWorkflowContextProperty_1" sap:VirtualizedContainerService.HintSize="531,68">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <scg:Dictionary x:TypeArguments="x:String, msdad:ViewStateNameValue" x:Key="SPLocalizedDisplayNames">
+              <msdad:ViewStateNameValue x:Key="PropertyName" DisplayName="Current Site URL" Value="CurrentWebUrl" />
+            </scg:Dictionary>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LookupWorkflowContextProperty_2" sap:VirtualizedContainerService.HintSize="200,68">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <scg:Dictionary x:TypeArguments="x:String, msdad:ViewStateNameValue" x:Key="SPLocalizedDisplayNames">
+              <msdad:ViewStateNameValue x:Key="PropertyName" DisplayName="List Id" Value="ListId" />
+            </scg:Dictionary>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="222,192">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="HttpSend_1" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="GetDynamicValueProperty`1_1" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="264,350">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="531,500" />
+      <sap2010:ViewStateData Id="GetCurrentItemId_1" sap:VirtualizedContainerService.HintSize="242,68" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="264,294">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="531,444" />
+      <sap2010:ViewStateData Id="HttpSend_2" sap:VirtualizedContainerService.HintSize="200,62" />
+      <sap2010:ViewStateData Id="GetDynamicValueProperty`1_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="531,248">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="HttpSend_3" sap:VirtualizedContainerService.HintSize="531,62" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="531,62" />
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="531,62" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="531,62" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="553,1912">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Delegate.Office365.Common.WorkflowActions.Start2013ListWorkflow_1" sap:VirtualizedContainerService.HintSize="551,546" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

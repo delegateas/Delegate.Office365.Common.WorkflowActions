@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="ToUpperCase" Url="Workflows/ToUpperCase" Path="ToUpperCase">
+    <File Url="ToUpperCase.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="ToUpperCase.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

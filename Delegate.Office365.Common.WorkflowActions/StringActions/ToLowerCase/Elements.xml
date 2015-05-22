@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="ToLowerCase" Url="Workflows/ToLowerCase" Path="ToLowerCase">
+    <File Url="ToLowerCase.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="ToLowerCase.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

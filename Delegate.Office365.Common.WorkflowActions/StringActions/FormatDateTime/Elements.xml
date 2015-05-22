@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="FormatDateTime" Url="Workflows/FormatDateTime" Path="FormatDateTime">
+    <File Url="FormatDateTime.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="FormatDateTime.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

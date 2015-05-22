@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="EndsWith" Url="Workflows/EndsWith" Path="EndsWith">
+    <File Url="EndsWith.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="EndsWith.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

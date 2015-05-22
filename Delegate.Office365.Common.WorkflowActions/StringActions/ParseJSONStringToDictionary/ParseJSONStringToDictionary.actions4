@@ -1,0 +1,10 @@
+﻿<Action Name="Parse JSON String To Dictionary" ClassName="Delegate.Office365.Common.WorkflowActions.ParseJSONStringToDictionary" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Build Dictionary from Json String %1 (Output to %2)">
+    <FieldBind Id="1" Field="SourceString"    Text="JSON string" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="ResultDictionary" Text="dictionary" DesignerType="ParameterNames" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="SourceString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="Source string" />    
+    <Parameter Direction="Out" Name="ResultDictionary" DesignerType="ParameterNames" Type="Microsoft.Activities.DynamicValue, Microsoft.Activities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+  </Parameters>
+</Action>

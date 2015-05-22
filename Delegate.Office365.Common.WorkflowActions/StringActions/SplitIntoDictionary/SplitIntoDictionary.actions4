@@ -1,0 +1,14 @@
+﻿<Action Name="Split string into dictionary" ClassName="Delegate.Office365.Common.WorkflowActions.SplitIntoDictionary" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Split string %1 with %2 as delimiter and store the result in dictionary %3 (Optionally store as JSON into string %4)">
+    <FieldBind Id="1" Field="InSourceString"    Text="Source String" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="InDelimiter" Text="delimiter" DesignerType="TextArea" />
+    <FieldBind Id="3" Field="OutResultDictionary" Text="result" DesignerType="ParameterNames" />
+    <FieldBind Id="4" Field="DebugRawJson" Text="json" DesignerType="ParameterNames" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="InSourceString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="Source String" />
+    <Parameter Direction="In" Name="InSubString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="delimiter" />
+    <Parameter Direction="Out" Name="OutResultDictionary" DesignerType="ParameterNames" Type="Microsoft.Activities.DynamicValue, Microsoft.Activities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" Description="dictionary" />
+    <Parameter Direction="Out" Name="DebugRawJson" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="json"/>
+  </Parameters>
+</Action>

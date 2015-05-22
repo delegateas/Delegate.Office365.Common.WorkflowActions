@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="CallODataWebService" Url="Workflows/CallODataWebService">
+    <File Url="CallODataWebService.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" Path="CallODataWebService\CallODataWebService.xaml" />
+    <File Url="CallODataWebService.actions4" Type="Ghostable" Path="CallODataWebService\CallODataWebService.actions4" />
+  </Module>
+</Elements>

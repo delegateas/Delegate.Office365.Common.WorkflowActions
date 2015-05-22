@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="ContainsString" Url="Workflows/ContainsString" Path="ContainsString">
+    <File Url="ContainsString.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="ContainsString.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

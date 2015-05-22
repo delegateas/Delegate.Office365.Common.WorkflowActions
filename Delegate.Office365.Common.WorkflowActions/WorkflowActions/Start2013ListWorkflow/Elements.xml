@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="Start2013ListWorkflow" Url="Workflows/Start2013ListWorkflow" Path="Start2013ListWorkflow">
+    <File Url="Start2013ListWorkflow.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="Start2013ListWorkflow.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

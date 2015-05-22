@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="ParseJSONStringToDictionary" Url="Workflows/ParseJSONStringToDictionary" Path="ParseJSONStringToDictionary">
+    <File Url="ParseJSONStringToDictionary.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="ParseJSONStringToDictionary.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

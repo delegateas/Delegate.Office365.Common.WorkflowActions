@@ -1,0 +1,342 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="Delegate.Office365.Common.WorkflowActions.CallODataWebService"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:p="http://schemas.microsoft.com/workflow/2012/07/xaml/activities"
+ xmlns:p1="wf://workflow.windows.net/$Current/$Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sn="clr-namespace:System.Net;assembly=System"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="InUrl" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="InRequestHeader" Type="InArgument(p:DynamicValue)" />
+    <x:Property Name="InRequestContent" Type="InArgument(p:DynamicValue)" />
+    <x:Property Name="OutResponseHeader" Type="OutArgument(p:DynamicValue)" />
+    <x:Property Name="OutResponseContent" Type="OutArgument(p:DynamicValue)" />
+    <x:Property Name="InMethod" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="OutStatus" Type="OutArgument(x:String)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>Delegate.Office365.Common.WorkflowActions.CallODataWebService_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>Microsoft.Activities</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>System.Collections</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.Activities.Design</AssemblyReference>
+      <AssemblyReference>Microsoft.SharePoint.DesignTime.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Workflow.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Workflow.Runtime</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Delegate.Office365.Common.WorkflowActions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Call JSON Web Service" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="p:DynamicValue" Name="CustomRequestHeader" />
+      <Variable x:TypeArguments="x:String" Name="CustomerGuid" />
+      <Variable x:TypeArguments="p:DynamicValue" Name="ModdedRequestHeader" />
+    </Sequence.Variables>
+    <Sequence DisplayName="Build Header" sap2010:WorkflowViewState.IdRef="Sequence_1">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="requestHeaderJSON" />
+      </Sequence.Variables>
+      <If DisplayName="If Request Header not empty" sap2010:WorkflowViewState.IdRef="If_2">
+        <If.Condition>
+          <InArgument x:TypeArguments="x:Boolean">
+            <mca:CSharpValue x:TypeArguments="x:Boolean">InRequestHeader.ToString().Length != 0</mca:CSharpValue>
+          </InArgument>
+        </If.Condition>
+        <If.Then>
+          <Sequence DisplayName="Append" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <Assign DisplayName="Convert to JSON" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">InRequestHeader.ToString()</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="strip off &quot;}&quot;" sap2010:WorkflowViewState.IdRef="Assign_9">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON.Substring(0, requestHeaderJSON.Length - 1)</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+            <Assign DisplayName="insert &quot;,&quot;" sap2010:WorkflowViewState.IdRef="Assign_10">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON + ","</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Assign DisplayName="Init" sap2010:WorkflowViewState.IdRef="Assign_11">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">
+                <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">{</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+      <Sequence DisplayName="Append Header" sap2010:WorkflowViewState.IdRef="Sequence_6">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:Boolean" Name="containsAccept" />
+          <Variable x:TypeArguments="x:Boolean" Name="containsContentType" />
+          <Variable x:TypeArguments="x:Boolean" Name="containsTenantKey" />
+        </Sequence.Variables>
+        <p1:ContainsString sap2010:WorkflowViewState.IdRef="ContainsString_5" isCaseSensitive="False" subString="accept">
+          <p1:ContainsString.isContaining>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpReference x:TypeArguments="x:Boolean">containsAccept</mca:CSharpReference>
+            </OutArgument>
+          </p1:ContainsString.isContaining>
+          <p1:ContainsString.sourceString>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpValue>
+            </InArgument>
+          </p1:ContainsString.sourceString>
+        </p1:ContainsString>
+        <If sap2010:WorkflowViewState.IdRef="If_3">
+          <If.Condition>
+            <InArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpValue x:TypeArguments="x:Boolean">containsAccept</mca:CSharpValue>
+            </InArgument>
+          </If.Condition>
+          <If.Else>
+            <Assign DisplayName="+ accept" sap2010:WorkflowViewState.IdRef="Assign_13">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON + @"""accept"":""application/json;odata=verbose"""</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+          </If.Else>
+        </If>
+        <p1:ContainsString sap2010:WorkflowViewState.IdRef="ContainsString_6" isCaseSensitive="False" subString="content-type">
+          <p1:ContainsString.isContaining>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpReference x:TypeArguments="x:Boolean">containsContentType</mca:CSharpReference>
+            </OutArgument>
+          </p1:ContainsString.isContaining>
+          <p1:ContainsString.sourceString>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpValue>
+            </InArgument>
+          </p1:ContainsString.sourceString>
+        </p1:ContainsString>
+        <If sap2010:WorkflowViewState.IdRef="If_4">
+          <If.Condition>
+            <InArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpValue x:TypeArguments="x:Boolean">containsContentType</mca:CSharpValue>
+            </InArgument>
+          </If.Condition>
+          <If.Else>
+            <Assign DisplayName="+ content-type" sap2010:WorkflowViewState.IdRef="Assign_14">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">
+                  <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+                </OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON + @",""content-type"":""application/json;odata=verbose"""</mca:CSharpValue>
+                </InArgument>
+              </Assign.Value>
+            </Assign>
+          </If.Else>
+        </If>
+        <Assign DisplayName="+ }" sap2010:WorkflowViewState.IdRef="Assign_15">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">
+              <mca:CSharpReference x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpReference>
+            </OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON + "}"</mca:CSharpValue>
+            </InArgument>
+          </Assign.Value>
+        </Assign>
+      </Sequence>
+      <p:ParseDynamicValue sap2010:WorkflowViewState.IdRef="ParseDynamicValue_1">
+        <p:ParseDynamicValue.Result>
+          <OutArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpReference x:TypeArguments="p:DynamicValue">ModdedRequestHeader</mca:CSharpReference>
+          </OutArgument>
+        </p:ParseDynamicValue.Result>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">requestHeaderJSON</mca:CSharpValue>
+        </InArgument>
+      </p:ParseDynamicValue>
+    </Sequence>
+    <Sequence DisplayName="Send HTTP Request" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="sn:HttpStatusCode" Name="responseCode" />
+      </Sequence.Variables>
+      <p:HttpSend sap2010:WorkflowViewState.IdRef="HttpSend_1">
+        <p:HttpSend.Method>
+          <InArgument x:TypeArguments="x:String">
+            <mca:CSharpValue x:TypeArguments="x:String">InMethod</mca:CSharpValue>
+          </InArgument>
+        </p:HttpSend.Method>
+        <p:HttpSend.RequestContent>
+          <InArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpValue x:TypeArguments="p:DynamicValue">InRequestContent</mca:CSharpValue>
+          </InArgument>
+        </p:HttpSend.RequestContent>
+        <p:HttpSend.RequestHeaders>
+          <InArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpValue x:TypeArguments="p:DynamicValue">ModdedRequestHeader</mca:CSharpValue>
+          </InArgument>
+        </p:HttpSend.RequestHeaders>
+        <p:HttpSend.ResponseContent>
+          <OutArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpReference x:TypeArguments="p:DynamicValue">OutResponseContent</mca:CSharpReference>
+          </OutArgument>
+        </p:HttpSend.ResponseContent>
+        <p:HttpSend.ResponseHeaders>
+          <OutArgument x:TypeArguments="p:DynamicValue">
+            <mca:CSharpReference x:TypeArguments="p:DynamicValue">OutResponseHeader</mca:CSharpReference>
+          </OutArgument>
+        </p:HttpSend.ResponseHeaders>
+        <p:HttpSend.ResponseStatusCode>
+          <OutArgument x:TypeArguments="sn:HttpStatusCode">
+            <mca:CSharpReference x:TypeArguments="sn:HttpStatusCode">responseCode</mca:CSharpReference>
+          </OutArgument>
+        </p:HttpSend.ResponseStatusCode>
+        <p:HttpSend.Uri>
+          <InArgument x:TypeArguments="x:String">
+            <mca:CSharpValue x:TypeArguments="x:String">InUrl</mca:CSharpValue>
+          </InArgument>
+        </p:HttpSend.Uri>
+      </p:HttpSend>
+      <Assign sap2010:WorkflowViewState.IdRef="Assign_12">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">
+            <mca:CSharpReference x:TypeArguments="x:String">OutStatus</mca:CSharpReference>
+          </OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">
+            <mca:CSharpValue x:TypeArguments="x:String">responseCode.ToString()</mca:CSharpValue>
+          </InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+    <sads:DebugSymbol.Symbol>d5ABRDpcRGVsZWdhdGUgQXp1cmUgRnJhbWV3b3JrXE1haW5cU291cmNlXERlbGVnYXRlLk9mZmljZTM2NS5Db21tb24uV29ya2Zsb3dBY3Rpb25zXFdlYlNlcnZpY2VBY3Rpb25zXENhbGxPRGF0YVdlYlNlcnZpY2VcQ2FsbE9EYXRhV2ViU2VydmljZS54YW1sOEIDngIOAgEBSAXmARACAXHnAQWcAhACAQJMB4YBDAMBywKHAQfbARIDAYsB3AEH5QEdAgFy6wEHjwIUAgEckAIHmwIQAgEDTw1PcgMBzAJTC3gWAwHmAnsLhAEUAwHYAo0BCZgBHQMBqgKZAQmtAQ4DAfsBrgEJuQEdAwHaAboBCc4BDgMBqwHPAQnaARIDAYwB3wEN3wFsAgF/4wEL4wFaAgFz+AEN+AFkAgFl8wEN8wFhAgFZhwINhwJoAgFNjAINjAJQAgFB/QEN/QFrAgE1ggINggJqAgEp7gEN7gFTAgEdmAINmAJiAgEQkwINkwJcAgEEVA1fFgMBmQNgDWsWAwGAA2wNdxYDAecCggE2ggE3AwHlAn4RfmgDAdkCjQFxjQF5AwHKApABD5ABZAMBuwKVAQ+VAV4DAawCjQFfjQFmAwGrApwBD5wBXAMB/AGgAQ2rARYDAYsCrgFxrgF/AwH6AbEBD7EBaQMB6wG2AQ+2AV4DAdwBrgFfrgFmAwHbAb0BD70BYQMBrAHBAQ3MARYDAbsB1wEP1wFkAwGcAdIBD9IBZgMBjQFcE1xrAwGmA1cTV2oDAZoDaBNojQEDAY0DYxNjagMBgQN0E3RoAwH0Am8Tb2oDAegCqAETqAGVAQMBmwKjAROjAWoDAYwCyQETyQGcAQMBywHEARPEAWoDAbwB</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="264,390">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_11" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="531,540" />
+      <sap2010:ViewStateData Id="ContainsString_5" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,212" />
+      <sap2010:ViewStateData Id="ContainsString_6" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="464,212" />
+      <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="464,62" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="531,814">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ParseDynamicValue_1" sap:VirtualizedContainerService.HintSize="531,22" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="553,1580">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="HttpSend_1" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="553,288">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="575,2032">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Delegate.Office365.Common.WorkflowActions.CallODataWebService_1" sap:VirtualizedContainerService.HintSize="615,2112" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

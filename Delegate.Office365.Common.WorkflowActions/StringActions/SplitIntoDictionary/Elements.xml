@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="SplitIntoDictionary" Url="Workflows/SplitIntoDictionary" Path="SplitIntoDictionary">
+    <File Url="SplitIntoDictionary.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="SplitIntoDictionary.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

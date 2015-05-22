@@ -1,0 +1,10 @@
+﻿<Action Name="Convert string to upper case" ClassName="Delegate.Office365.Common.WorkflowActions.ToUpperCase" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Convert string %1 to upper case (Output to %2)">
+    <FieldBind Id="1" Field="InString" Text="Source String" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="OutString" Text="result" DesignerType="ParameterNames" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="InString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="Source String" />
+    <Parameter Direction="Out" Name="OutString" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Result"/>
+  </Parameters>
+</Action>

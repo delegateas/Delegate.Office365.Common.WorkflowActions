@@ -1,0 +1,14 @@
+﻿<Action Name="Check if string ends with substring" ClassName="Delegate.Office365.Common.WorkflowActions.EndsWith" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Check if %1 ends with substring %2 and output result to %3 (Is case sensitive? %4)">
+    <FieldBind Id="1" Field="InSourceString"    Text="Source String" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="InSubString" Text="substring" DesignerType="TextArea" />
+    <FieldBind Id="3" Field="OutResult" Text="result" DesignerType="ParameterNames" />
+    <FieldBind Id="4" Field="InIsCaseSensitive" Text="is case sensitive" DesignerType="Bool" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="InSourceString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="Source String" />
+    <Parameter Direction="In" Name="InSubString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="substring" />
+    <Parameter Direction="Out" Name="OutResult" DesignerType="ParameterNames" Type="System.Boolean, mscorlib" Description="result"/>
+    <Parameter Direction="In" Name="InIsCaseSensitive" InitialValue="True" DesignerType="Bool" Type="System.Boolean, mscorlib" Description="Is case sensitive" />
+  </Parameters>
+</Action>

@@ -1,0 +1,10 @@
+﻿<Action Name="Get length of string" ClassName="Delegate.Office365.Common.WorkflowActions.GetLength" Category="String Transformation" AppliesTo="all">
+  <RuleDesigner Sentence="Get the length of string %1 (Output to %2)">
+    <FieldBind Id="1" Field="InString"    Text="Source String" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="OutLength" Text="result" DesignerType="ParameterNames" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="InString"    DesignerType="StringBuilder" Type="System.String, mscorlib" Description="Source String" />
+    <Parameter Direction="Out" Name="OutLength" DesignerType="ParameterNames" Type="System.Int32, mscorlib" Description="result"/>
+  </Parameters>
+</Action>

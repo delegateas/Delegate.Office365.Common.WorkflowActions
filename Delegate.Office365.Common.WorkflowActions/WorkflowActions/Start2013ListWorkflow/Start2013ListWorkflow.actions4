@@ -1,0 +1,16 @@
+﻿<Action Name="Start 2013 List Workflow" ClassName="Delegate.Office365.Common.WorkflowActions.Start2013ListWorkflow" Category="Workflows" AppliesTo="all">
+  <RuleDesigner Sentence="Start SharePoint 2013 List Workflow with Name %1 (Optionally on list with name %2, on item id %3)">
+    <!-- Define the UI widgets SharePoint designer should use for configuring this action -->
+    <FieldBind Id="1" Field="InWorkflowName" Text="WorkflowName" DesignerType="TextArea" />
+    <FieldBind Id="2" Field="InListName" Text="ListName" DesignerType="TextArea" />
+    <FieldBind Id="3" Field="InItemId" Text="ItemId" DesignerType="TextArea" />
+  </RuleDesigner>
+  <Parameters>
+    <Parameter Direction="In" Name="InWorkflowName" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Workflow Name"/>
+    <Parameter Direction="In" Name="InListName" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="List Name"/>
+    <Parameter Direction="In" Name="InItemId" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Item Id"/>
+    <Parameter Direction="Out" Name="OutResponseHeaders" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Response Headers"/>
+    <Parameter Direction="Out" Name="OutResponseBody" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Response Body"/>
+    <Parameter Direction="Out" Name="OutStatusCode" DesignerType="ParameterNames" Type="System.String, mscorlib" Description="Status Code"/>
+  </Parameters>
+</Action>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="GetLength" Url="Workflows/GetLength" Path="GetLength">
+    <File Url="GetLength.xaml" Type="Ghostable" DoGUIDFixUp="TRUE" />
+    <File Url="GetLength.actions4" Type="Ghostable" />
+  </Module>
+</Elements>

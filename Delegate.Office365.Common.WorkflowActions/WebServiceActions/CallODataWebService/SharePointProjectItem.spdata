@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.Workflow4CustomActivity" DefaultFile="CallODataWebService.xaml" FeatureReceiverClass="Microsoft.SharePoint.WorkflowServices.SPCustomActionPackagingFeatureReceiver" FeatureReceiverAssembly="Microsoft.SharePoint.WorkflowServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c" SupportedTrustLevels="All" SupportedDeploymentScopes="Web" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="CallODataWebService\" Type="ElementManifest" />
+    <ProjectItemFile Source="CallODataWebService.xaml" Target="CallODataWebService\" Type="ElementFile" />
+    <ProjectItemFile Source="CallODataWebService.actions4" Target="CallODataWebService\" Type="ElementFile" />
+  </Files>
+  <ExtensionData>
+    <ExtensionDataItem Key="CustomActionItemTemplateFileName" Value="SharePoint15CustomActionItem.zip" />
+    <ExtensionDataItem Key="CustomActivityItemTemplateFileName" Value="SharePoint15CustomActivityItem.zip" />
+  </ExtensionData>
+</ProjectItem>
