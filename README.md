@@ -1,3 +1,4 @@
+<image src="https://ci.appveyor.com/api/projects/status/github/delegateas/Delegate.Office365.Common.WorkflowActions?branch=master&svg=true" />
 # Introduction
 `Delegate.Office365.Common.WorkflowActions` provides a series of Custom Workflow Actions to supplement the existing actions on SharePoint Online and SharePoint 2013, deployable to any SP.Web as a WSP package.
 
